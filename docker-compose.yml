@@ -1,0 +1,125 @@
+services:
+
+  # ──────────────────────────────────────────────
+  # PostgreSQL
+  # ──────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: vi-postgres
+    environment:
+      POSTGRES_DB: vehicleintelligence
+      POSTGRES_USER: vehicleadmin
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-vehiclepass123}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vehicleadmin -d vehicleintelligence"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ──────────────────────────────────────────────
+  # Redis
+  # ──────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: vi-redis
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ──────────────────────────────────────────────
+  # RabbitMQ (with Management UI)
+  # ──────────────────────────────────────────────
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: vi-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-admin123}
+    ports:
+      - "5672:5672"
+      - "15672:15672"   # Management UI
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  # ──────────────────────────────────────────────
+  # Vehicle Intelligence API
+  # ──────────────────────────────────────────────
+  vehicle-api:
+    build:
+      context: .
+      dockerfile: src/VehicleIntelligence.Api/Dockerfile
+    container_name: vi-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__PostgreSQL: "Host=postgres;Port=5432;Database=vehicleintelligence;Username=vehicleadmin;Password=${DB_PASSWORD:-vehiclepass123}"
+      Redis__ConnectionString: "redis:6379"
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: admin
+      RabbitMQ__Password: ${RABBITMQ_PASSWORD:-admin123}
+    ports:
+      - "5000:8080"     # HTTP
+      - "5001:8081"     # gRPC (HTTP/2)
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  # ──────────────────────────────────────────────
+  # Vehicle Intelligence Worker
+  # ──────────────────────────────────────────────
+  vehicle-worker:
+    build:
+      context: .
+      dockerfile: src/VehicleIntelligence.Worker/Dockerfile
+    container_name: vi-worker
+    environment:
+      DOTNET_ENVIRONMENT: Production
+      ConnectionStrings__PostgreSQL: "Host=postgres;Port=5432;Database=vehicleintelligence;Username=vehicleadmin;Password=${DB_PASSWORD:-vehiclepass123}"
+      Redis__ConnectionString: "redis:6379"
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__Username: admin
+      RabbitMQ__Password: ${RABBITMQ_PASSWORD:-admin123}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  # ──────────────────────────────────────────────
+  # pgAdmin (optional — for DB inspection)
+  # ──────────────────────────────────────────────
+  pgadmin:
+    image: dpage/pgadmin4:8
+    container_name: vi-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@vehicle-intelligence.local
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-pgadmin123}
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    profiles:
+      - tools
+
+volumes:
+  postgres_data:
+  rabbitmq_data:

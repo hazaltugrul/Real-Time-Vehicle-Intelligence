@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option csharp_namespace = "VehicleIntelligence.Grpc";
+
+package telemetry;
+
+// TelemetryIngestion service handles real-time streaming from the Simulator.
+service TelemetryIngestion {
+  // Client-streaming RPC: simulator sends a stream of messages, server accumulates and responds.
+  rpc StreamTelemetry (stream TelemetryMessage) returns (TelemetryStreamResponse);
+}
+
+// Represents a single telemetry snapshot from a vehicle sensor reading.
+message TelemetryMessage {
+  string vehicle_id       = 1;  // External vehicle identifier
+  string trip_id          = 2;  // Trip/session identifier
+  string timestamp        = 3;  // ISO 8601 UTC timestamp
+  double speed            = 4;  // km/h
+  double latitude         = 5;
+  double longitude        = 6;
+  double battery_level    = 7;  // % State of Charge (SOC)
+  double engine_rpm       = 8;
+  double engine_load      = 9;  // %
+  double fuel_rate        = 10; // L/h
+  double energy_consumption = 11; // Wh/km or kWh
+  double battery_voltage  = 12; // V
+  double battery_current  = 13; // A
+  double temperature      = 14; // °C outside air temperature
+  double distance         = 15; // km (odometer or trip distance)
+  string raw_payload_json = 16; // Full original CSV row as JSON
+  bool has_speed          = 17; // Presence flag (proto3 can't distinguish 0.0 from absent)
+  bool has_latitude       = 18;
+  bool has_longitude      = 19;
+  bool has_battery_level  = 20;
+  bool has_engine_rpm     = 21;
+  bool has_engine_load    = 22;
+  bool has_fuel_rate      = 23;
+  bool has_energy_consumption = 24;
+  bool has_battery_voltage = 25;
+  bool has_battery_current = 26;
+  bool has_temperature    = 27;
+  bool has_distance       = 28;
+  double mass_air_flow       = 29;
+  double air_conditioning_power = 30;
+  double heater_power        = 31;
+  double elevation           = 32;
+  double speed_limit         = 33;
+  bool has_mass_air_flow       = 34;
+  bool has_air_conditioning_power = 35;
+  bool has_heater_power        = 36;
+  bool has_elevation           = 37;
+  bool has_speed_limit         = 38;
+}
+
+// Summary response returned after the streaming completes.
+message TelemetryStreamResponse {
+  int32  accepted_count = 1;
+  int32  rejected_count = 2;
+  string message        = 3;
+}

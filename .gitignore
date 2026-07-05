@@ -1,0 +1,53 @@
+## Core dotnet ignore rules
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+PublishOutput/
+publish/
+
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Visual Studio cache and settings
+.vs/
+.vs*
+[Tt]est[Rr]esults/
+.vs-showcase/
+
+## VS Code settings
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+## JetBrains Rider / IntelliJ
+.idea/
+*.sln.iml
+
+## Logs
+logs/
+*.log
+
+## OS files
+.DS_Store
+Thumbs.db
+
+## Secrets and configurations
+.env
+.env.local
+.env.*.local
+appsettings.Production.json
+
+## Docker compose local overrides
+docker-compose.override.yml
+
+## Datasets and large CSV data files
+data/
+*.csv

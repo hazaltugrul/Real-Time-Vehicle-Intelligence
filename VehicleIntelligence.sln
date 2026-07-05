@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6575F972-35FD-48A6-9A64-1D1DFC1460B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleIntelligence.Domain", "src\VehicleIntelligence.Domain\VehicleIntelligence.Domain.csproj", "{D8F9D145-2F40-41F4-BD5E-FE94CC241D02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleIntelligence.Application", "src\VehicleIntelligence.Application\VehicleIntelligence.Application.csproj", "{4EC7A21B-8C54-4430-85DF-5AEEB379C355}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleIntelligence.Infrastructure", "src\VehicleIntelligence.Infrastructure\VehicleIntelligence.Infrastructure.csproj", "{A09DC2FE-9A27-41FE-A7B6-0DCEA1C0E68B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleIntelligence.Api", "src\VehicleIntelligence.Api\VehicleIntelligence.Api.csproj", "{B57DD777-73A6-4E66-8572-CE4CA96ECA5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleIntelligence.Worker", "src\VehicleIntelligence.Worker\VehicleIntelligence.Worker.csproj", "{5F7D5F10-7FAC-4C48-B64E-37470BC586C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleIntelligence.Grpc", "src\VehicleIntelligence.Grpc\VehicleIntelligence.Grpc.csproj", "{B5CC0714-9574-4FE1-A42E-C77AE02941E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleIntelligence.Simulator", "src\VehicleIntelligence.Simulator\VehicleIntelligence.Simulator.csproj", "{428BAFA9-FAA4-4AAD-B613-3DE77DBBBF70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{67BB5798-6540-46E0-AA5F-CDFC4E1FDC39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleIntelligence.UnitTests", "tests\VehicleIntelligence.UnitTests\VehicleIntelligence.UnitTests.csproj", "{C6629816-548E-4B6A-BDCF-1E3F649A6A5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VehicleIntelligence.IntegrationTests", "tests\VehicleIntelligence.IntegrationTests\VehicleIntelligence.IntegrationTests.csproj", "{625ADF3F-8912-4B48-A656-5AFEE63DB1B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8F9D145-2F40-41F4-BD5E-FE94CC241D02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8F9D145-2F40-41F4-BD5E-FE94CC241D02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8F9D145-2F40-41F4-BD5E-FE94CC241D02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8F9D145-2F40-41F4-BD5E-FE94CC241D02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EC7A21B-8C54-4430-85DF-5AEEB379C355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EC7A21B-8C54-4430-85DF-5AEEB379C355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EC7A21B-8C54-4430-85DF-5AEEB379C355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EC7A21B-8C54-4430-85DF-5AEEB379C355}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A09DC2FE-9A27-41FE-A7B6-0DCEA1C0E68B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A09DC2FE-9A27-41FE-A7B6-0DCEA1C0E68B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A09DC2FE-9A27-41FE-A7B6-0DCEA1C0E68B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A09DC2FE-9A27-41FE-A7B6-0DCEA1C0E68B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B57DD777-73A6-4E66-8572-CE4CA96ECA5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B57DD777-73A6-4E66-8572-CE4CA96ECA5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B57DD777-73A6-4E66-8572-CE4CA96ECA5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B57DD777-73A6-4E66-8572-CE4CA96ECA5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F7D5F10-7FAC-4C48-B64E-37470BC586C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F7D5F10-7FAC-4C48-B64E-37470BC586C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F7D5F10-7FAC-4C48-B64E-37470BC586C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F7D5F10-7FAC-4C48-B64E-37470BC586C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5CC0714-9574-4FE1-A42E-C77AE02941E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5CC0714-9574-4FE1-A42E-C77AE02941E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5CC0714-9574-4FE1-A42E-C77AE02941E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5CC0714-9574-4FE1-A42E-C77AE02941E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{428BAFA9-FAA4-4AAD-B613-3DE77DBBBF70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{428BAFA9-FAA4-4AAD-B613-3DE77DBBBF70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{428BAFA9-FAA4-4AAD-B613-3DE77DBBBF70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{428BAFA9-FAA4-4AAD-B613-3DE77DBBBF70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6629816-548E-4B6A-BDCF-1E3F649A6A5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6629816-548E-4B6A-BDCF-1E3F649A6A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6629816-548E-4B6A-BDCF-1E3F649A6A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6629816-548E-4B6A-BDCF-1E3F649A6A5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{625ADF3F-8912-4B48-A656-5AFEE63DB1B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{625ADF3F-8912-4B48-A656-5AFEE63DB1B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{625ADF3F-8912-4B48-A656-5AFEE63DB1B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{625ADF3F-8912-4B48-A656-5AFEE63DB1B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D8F9D145-2F40-41F4-BD5E-FE94CC241D02} = {6575F972-35FD-48A6-9A64-1D1DFC1460B4}
+		{4EC7A21B-8C54-4430-85DF-5AEEB379C355} = {6575F972-35FD-48A6-9A64-1D1DFC1460B4}
+		{A09DC2FE-9A27-41FE-A7B6-0DCEA1C0E68B} = {6575F972-35FD-48A6-9A64-1D1DFC1460B4}
+		{B57DD777-73A6-4E66-8572-CE4CA96ECA5D} = {6575F972-35FD-48A6-9A64-1D1DFC1460B4}
+		{5F7D5F10-7FAC-4C48-B64E-37470BC586C3} = {6575F972-35FD-48A6-9A64-1D1DFC1460B4}
+		{B5CC0714-9574-4FE1-A42E-C77AE02941E3} = {6575F972-35FD-48A6-9A64-1D1DFC1460B4}
+		{428BAFA9-FAA4-4AAD-B613-3DE77DBBBF70} = {6575F972-35FD-48A6-9A64-1D1DFC1460B4}
+		{C6629816-548E-4B6A-BDCF-1E3F649A6A5B} = {67BB5798-6540-46E0-AA5F-CDFC4E1FDC39}
+		{625ADF3F-8912-4B48-A656-5AFEE63DB1B2} = {67BB5798-6540-46E0-AA5F-CDFC4E1FDC39}
+	EndGlobalSection
+EndGlobal
