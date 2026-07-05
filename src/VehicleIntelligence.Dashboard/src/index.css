@@ -1,0 +1,227 @@
+:root {
+  --bg-primary: #080b11;
+  --bg-surface: rgba(15, 22, 36, 0.7);
+  --bg-surface-glow: rgba(26, 37, 58, 0.85);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --color-accent: #3b82f6; /* Blue */
+  --color-success: #10b981; /* Emerald Green */
+  --color-warning: #f59e0b; /* Amber */
+  --color-danger: #ef4444; /* Rose Red */
+  
+  --shadow-neon-blue: 0 0 15px rgba(59, 130, 246, 0.4);
+  --shadow-neon-green: 0 0 15px rgba(16, 185, 129, 0.4);
+  --shadow-neon-warning: 0 0 15px rgba(245, 158, 11, 0.4);
+  --shadow-neon-danger: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+}
+
+/* Glassmorphism Styles */
+.glass-container {
+  display: grid;
+  grid-template-rows: 64px 1fr;
+  height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle at 50% 0%, #1e293b 0%, #080b11 70%);
+}
+
+.glass-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(11, 15, 25, 0.6);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 100;
+}
+
+.glass-content {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  overflow: hidden;
+  height: calc(100vh - 64px);
+}
+
+.glass-sidebar {
+  background: rgba(11, 15, 25, 0.4);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.glass-main {
+  display: grid;
+  grid-template-rows: 55% 45%;
+  overflow: hidden;
+  height: 100%;
+}
+
+.glass-panel-top {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.glass-map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.glass-alerts-panel {
+  background: rgba(11, 15, 25, 0.5);
+  backdrop-filter: blur(8px);
+  border-left: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.glass-stats-panel {
+  background: rgba(11, 15, 25, 0.55);
+  backdrop-filter: blur(12px);
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  padding: 16px;
+  gap: 16px;
+  overflow: hidden;
+  height: 100%;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Visual UI Tokens */
+.glass-card {
+  background: var(--bg-surface);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.glass-card:hover {
+  background: var(--bg-surface-glow);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.glass-card.active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+.glow-active {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Leaflet Map overrides for Dark Mode aesthetics */
+.leaflet-container {
+  background: #0b0f19 !important;
+  width: 100%;
+  height: 100%;
+}
+
+.leaflet-tile {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+.leaflet-popup-content-wrapper {
+  background: rgba(15, 22, 36, 0.9) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+  border-radius: 12px !important;
+  font-family: 'Inter', sans-serif;
+}
+
+.leaflet-popup-tip {
+  background: rgba(15, 22, 36, 0.9) !important;
+}
+
+/* Utility components */
+.text-gradient {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--color-success);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-danger);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-accent {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--color-accent);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}

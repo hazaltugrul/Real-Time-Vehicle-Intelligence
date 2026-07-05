@@ -47,7 +47,3 @@ appsettings.Production.json
 
 ## Docker compose local overrides
 docker-compose.override.yml
-
-## Datasets and large CSV data files
-data/
-*.csv

@@ -92,6 +92,30 @@ public sealed class TelemetryReceivedEventConsumer : IConsumer<TelemetryReceived
         _logger.LogDebug("Telemetry persisted: RecordId={RecordId}, RiskScore={RiskScore:F2}",
             record.Id, riskScore);
 
+        // Publish processing completion event to notify real-time clients
+        await context.Publish(new TelemetryProcessedEvent
+        {
+            RecordId = record.Id,
+            VehicleId = record.VehicleId,
+            VehicleExternalId = evt.VehicleExternalId,
+            TripId = record.TripId,
+            Timestamp = record.Timestamp,
+            Speed = record.Speed ?? 0,
+            Latitude = record.Latitude ?? 0,
+            Longitude = record.Longitude ?? 0,
+            BatteryLevel = record.BatteryLevel ?? 0,
+            Temperature = record.Temperature ?? 0,
+            RiskScore = riskScore,
+            EngineRpm = record.EngineRpm,
+            EngineLoad = record.EngineLoad,
+            FuelRate = record.FuelRate,
+            EnergyConsumption = record.EnergyConsumption,
+            BatteryVoltage = record.BatteryVoltage,
+            BatteryCurrent = record.BatteryCurrent,
+            Elevation = record.Elevation,
+            SpeedLimit = record.SpeedLimit
+        }, cancellationToken);
+
         // ── Step 4: Evaluate alert rules ────────────────────────
         var alerts = _alertRuleEngine.Evaluate(record, riskScore).ToList();
         foreach (var alert in alerts)
@@ -100,6 +124,19 @@ public sealed class TelemetryReceivedEventConsumer : IConsumer<TelemetryReceived
             _logger.LogWarning(
                 "Alert generated: Type={AlertType}, Severity={Severity}, Vehicle={VehicleId}, RiskScore={RiskScore:F2}",
                 alert.AlertType, alert.Severity, vehicle.Id, riskScore);
+
+            // Publish alert triggered event to broadcast to real-time clients
+            await context.Publish(new AlertTriggeredEvent
+            {
+                AlertId = alert.Id,
+                VehicleId = alert.VehicleId,
+                VehicleExternalId = evt.VehicleExternalId,
+                AlertType = alert.AlertType.ToString(),
+                Severity = alert.Severity.ToString(),
+                Message = alert.Message,
+                RiskScore = riskScore,
+                Timestamp = alert.CreatedAt
+            }, cancellationToken);
         }
 
         // ── Step 5: Update Redis latest status ──────────────────

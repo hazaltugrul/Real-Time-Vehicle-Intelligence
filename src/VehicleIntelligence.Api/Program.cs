@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
 using Mapster;
+using VehicleIntelligence.Api.Consumers;
 using VehicleIntelligence.Api.GrpcServices;
+using VehicleIntelligence.Api.Hubs;
 using VehicleIntelligence.Api.Middleware;
 using VehicleIntelligence.Application;
 using VehicleIntelligence.Application.Events;
@@ -43,6 +45,8 @@ try
     // MassTransit + RabbitMQ
     builder.Services.AddMassTransit(x =>
     {
+        x.AddConsumer<TelemetryUpdateConsumer>();
+
         x.UsingRabbitMq((ctx, cfg) =>
         {
             var rabbitConfig = builder.Configuration.GetSection("RabbitMQ");
@@ -61,6 +65,19 @@ try
         options.EnableDetailedErrors = builder.Environment.IsDevelopment();
     });
     builder.Services.AddGrpcReflection();
+
+    // SignalR + CORS for dashboard real-time streams
+    builder.Services.AddSignalR();
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("CorsPolicy", policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+    });
 
     // Controllers + Swagger
     builder.Services.AddControllers();
@@ -112,7 +129,10 @@ try
         options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
     });
 
+    app.UseCors("CorsPolicy");
+
     app.MapControllers();
+    app.MapHub<TelemetryHub>("/hubs/telemetry");
     app.MapGrpcService<TelemetryIngestionService>();
     app.MapHealthChecks("/health");
 
